@@ -69,13 +69,13 @@
     padding: 15px 32px;
     text-align: center;
     text-decoration: none;
-    display: inline-block;
     font-size: 20px;
     border-radius:10px;
 }
 QPushButton:hover
 {
-	background-color:#f1f2f6;
+	background-color:#3bb300;
+	color: #fff;
 }
 </string>
         </property>
@@ -137,22 +137,5 @@ QPushButton:hover
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
  <resources/>
- <connections>
-  <connection>
-   <sender>pushButton_start_end</sender>
-   <signal>clicked()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>close()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>124</x>
-     <y>100</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>124</x>
-     <y>152</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+ <connections/>
 </ui>

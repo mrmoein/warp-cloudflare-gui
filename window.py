@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'untitled.ui'
+# Form implementation generated from reading ui file 'window.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.4
 #
@@ -39,13 +39,13 @@ class Ui_MainWindow(object):
 "    padding: 15px 32px;\n"
 "    text-align: center;\n"
 "    text-decoration: none;\n"
-"    display: inline-block;\n"
 "    font-size: 20px;\n"
 "    border-radius:10px;\n"
 "}\n"
 "QPushButton:hover\n"
 "{\n"
-"    background-color:#f1f2f6;\n"
+"    background-color:#3bb300;\n"
+"    color: #fff;\n"
 "}\n"
 "")
         self.pushButton_start_end.setObjectName("pushButton_start_end")
@@ -71,7 +71,6 @@ class Ui_MainWindow(object):
         MainWindow.setStatusBar(self.statusbar)
 
         self.retranslateUi(MainWindow)
-        self.pushButton_start_end.clicked.connect(MainWindow.close)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
