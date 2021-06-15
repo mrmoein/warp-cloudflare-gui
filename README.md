@@ -1,6 +1,6 @@
 # warp cloudflare gui
 
-a gui app depend on warp-cli
+a gui app depend on warp-cli for linux
 
 ### Installation
 read [warp-cli install doc](https://developers.cloudflare.com/warp-client/setting-up/linux).
