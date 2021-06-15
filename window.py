@@ -75,7 +75,7 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "warp cloudflare"))
         self.label_status_sub_message.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-size:11pt; color:#ffffff;\">your internet is </span><span style=\" font-size:11pt; font-weight:600; color:#ffffff;\">not private</span></p></body></html>"))
         self.pushButton_start_end.setText(_translate("MainWindow", "Start"))
         self.label_status_message.setText(_translate("MainWindow", "DISCONNECTED"))

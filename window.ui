@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>warp cloudflare</string>
   </property>
   <property name="styleSheet">
    <string notr="true">background:#3d3d3d;</string>
