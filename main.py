@@ -4,6 +4,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 import os
 import requests
 import time
+import threading
 
 
 class StarterGUI:
@@ -12,25 +13,14 @@ class StarterGUI:
         self.MainWindow = QtWidgets.QMainWindow()
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self.MainWindow)
-        self.statement = self.check_warp_statement()
-        self.local_statement = self.statement
-        self.base_styleSheet = self.ui.pushButton_start_end.styleSheet()
+        self.change_connect_button_text('Wait...')
+        self.ui.pushButton_start_end.setDisabled(True)
         self.custom_setup()
         # self.change_connect_button_color('#fff', '#ff5c33', '#ff5c33', '#fff')
 
     def custom_setup(self):
         self.MainWindow.setWindowIcon(QtGui.QIcon("logo.png"))
         self.ui.pushButton_start_end.clicked.connect(self.connect_button_clicked)
-        if self.local_statement == 'on':
-            self.change_connect_button_color('#fff', '#ff5c33', '#ff5c33', '#fff')
-            self.change_connect_button_text('End')
-            self.ui.label_status_message.setText('CONNECTED')
-            self.set_sub_status_message('private')
-        else:
-            self.change_connect_button_color('#000', '#fff', '#fff', '#3bb300')
-            self.change_connect_button_text('Start')
-            self.ui.label_status_message.setText('DISCONNECTED')
-            self.set_sub_status_message('not private')
 
     def connect_button_clicked(self):
         if self.local_statement == 'off':
@@ -40,7 +30,28 @@ class StarterGUI:
 
     def start(self):
         self.MainWindow.show()
+        threading.Thread(target=self.tread).start()
         sys.exit(self.app.exec_())
+
+    def tread(self, try_cunt=0):
+        if try_cunt == 2:
+            self.disconnect_to_warp()
+        self.statement = self.check_warp_statement()
+        self.local_statement = self.statement
+        self.base_styleSheet = self.ui.pushButton_start_end.styleSheet()
+        if self.local_statement == 'on':
+            self.change_connect_button_color('#fff', '#ff5c33', '#ff5c33', '#fff')
+            self.change_connect_button_text('End')
+            self.ui.label_status_message.setText('CONNECTED')
+            self.set_sub_status_message('private')
+        elif self.local_statement == 'off':
+            self.change_connect_button_color('#000', '#fff', '#fff', '#3bb300')
+            self.change_connect_button_text('Start')
+            self.ui.label_status_message.setText('DISCONNECTED')
+            self.set_sub_status_message('not private')
+        else:
+            self.tread(try_cunt=try_cunt + 1)
+        self.ui.pushButton_start_end.setDisabled(False)
 
     def set_sub_status_message(self, text):
         self.ui.label_status_sub_message.setText(
@@ -81,9 +92,14 @@ class StarterGUI:
         stream = os.popen('warp-cli connect')
         output = stream.read()
         stream.close()
-        time.sleep(2)
+        # time.sleep(2)
         if output == 'Success\n':
-            self.statement = self.check_warp_statement()
+            self.statement = None
+            while self.statement is None:
+                try:
+                    self.statement = self.check_warp_statement(timeout=1)
+                except:
+                    pass
             if self.statement == 'on':
                 self.change_connect_button_color('#fff', '#ff5c33', '#ff5c33', '#fff')
                 self.change_connect_button_text('End')
@@ -115,13 +131,13 @@ class StarterGUI:
         self.ui.pushButton_start_end.setStyleSheet(self.base_styleSheet + my_style)
 
     @staticmethod
-    def check_warp_statement():
+    def check_warp_statement(timeout=3):
         """
         check status from api
         Return: String => 'on' or 'off'
         """
         try:
-            r = requests.get('https://www.cloudflare.com/cdn-cgi/trace/', timeout=4)
+            r = requests.get('https://www.cloudflare.com/cdn-cgi/trace/', timeout=timeout)
             if r.status_code == 200:
                 result = r.text.split('\n')[11].split('=')
                 if result[0] == 'warp':
