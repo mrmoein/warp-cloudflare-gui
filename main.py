@@ -19,6 +19,7 @@ class StarterGUI:
         # self.change_connect_button_color('#fff', '#ff5c33', '#ff5c33', '#fff')
 
     def custom_setup(self):
+        self.MainWindow.setWindowIcon(QtGui.QIcon("logo.png"))
         self.ui.pushButton_start_end.clicked.connect(self.connect_button_clicked)
         if self.local_statement == 'on':
             self.change_connect_button_color('#fff', '#ff5c33', '#ff5c33', '#fff')
