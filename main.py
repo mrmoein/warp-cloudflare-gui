@@ -13,8 +13,7 @@ class StarterGUI:
         self.MainWindow = QtWidgets.QMainWindow()
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self.MainWindow)
-        self.change_connect_button_text('Wait...')
-        self.ui.pushButton_start_end.setDisabled(True)
+        self.set_start_end_button_wait()
         self.custom_setup()
         # self.change_connect_button_color('#fff', '#ff5c33', '#ff5c33', '#fff')
 
@@ -22,11 +21,17 @@ class StarterGUI:
         self.MainWindow.setWindowIcon(QtGui.QIcon("logo.png"))
         self.ui.pushButton_start_end.clicked.connect(self.connect_button_clicked)
 
+    def set_start_end_button_wait(self):
+        self.change_connect_button_text('Wait...')
+        self.ui.pushButton_start_end.setDisabled(True)
+
     def connect_button_clicked(self):
         if self.local_statement == 'off':
-            self.connect_to_warp()
+            self.set_start_end_button_wait()
+            threading.Thread(target=self.connect_to_warp).start()
         else:
-            self.disconnect_to_warp()
+            self.set_start_end_button_wait()
+            threading.Thread(target=self.disconnect_to_warp).start()
 
     def start(self):
         self.MainWindow.show()
@@ -87,7 +92,6 @@ class StarterGUI:
         """
         Connect to warp
         """
-        self.change_connect_button_text('Wait...')
         # self.ui.pushButton_start_end.setDisabled(True)
         stream = os.popen('warp-cli connect')
         output = stream.read()
