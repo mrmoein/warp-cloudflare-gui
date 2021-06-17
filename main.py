@@ -44,7 +44,7 @@ class StarterGUI:
         self.statement = self.check_warp_statement()
         self.local_statement = self.statement
         self.base_styleSheet = self.ui.pushButton_start_end.styleSheet()
-        if self.local_statement == 'on':
+        if self.statement == 'on' or self.statement == 'plus':
             self.change_connect_button_color('#fff', '#ff5c33', '#ff5c33', '#fff')
             self.change_connect_button_text('End')
             self.ui.label_status_message.setText('CONNECTED')
@@ -80,8 +80,9 @@ class StarterGUI:
                 self.ui.label_status_message.setText('DISCONNECTED')
                 self.set_sub_status_message('not private')
                 self.local_statement = 'off'
+                print('disconnected')
             else:
-                print('connection failed!')
+                print('disconnection failed!')
                 self.change_connect_button_text('End')
         else:
             print('error on warp end: {}'.format(output))
@@ -103,19 +104,23 @@ class StarterGUI:
             while self.statement is None:
                 try:
                     self.statement = self.check_warp_statement(timeout=2)
+                    # print(self.statement)
                 except:
                     pass
                 if time.time() > t_aim:
                     break
 
-            if self.statement == 'on':
+            if self.statement == 'on' or self.statement == 'plus':
                 self.change_connect_button_color('#fff', '#ff5c33', '#ff5c33', '#fff')
                 self.change_connect_button_text('End')
                 self.ui.label_status_message.setText('CONNECTED')
                 self.set_sub_status_message('private')
                 self.local_statement = 'on'
+                print('connected')
             else:
                 print('connection failed!')
+                self.set_start_end_button_wait()
+                self.disconnect_to_warp()
                 self.change_connect_button_text('Start')
         else:
             print('error on warp start: {}'.format(output))
@@ -156,7 +161,9 @@ class StarterGUI:
                 print('error in calling api, status code: {code}'.format(code=r.status_code))
             r.close()
         except Exception as e:
-            print('error in calling api, {}'.format(e))
+            if 'timeout=2' not in e:
+                print('error in calling api, {}'.format(e))
+            # print('error in calling api, {}'.format(e))
 
 
 if __name__ == "__main__":
