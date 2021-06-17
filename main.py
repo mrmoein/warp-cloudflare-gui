@@ -92,18 +92,22 @@ class StarterGUI:
         """
         Connect to warp
         """
-        # self.ui.pushButton_start_end.setDisabled(True)
         stream = os.popen('warp-cli connect')
         output = stream.read()
         stream.close()
-        # time.sleep(2)
+
         if output == 'Success\n':
             self.statement = None
+            t_aim = time.time() + 8
+
             while self.statement is None:
                 try:
-                    self.statement = self.check_warp_statement(timeout=1)
+                    self.statement = self.check_warp_statement(timeout=2)
                 except:
                     pass
+                if time.time() > t_aim:
+                    break
+
             if self.statement == 'on':
                 self.change_connect_button_color('#fff', '#ff5c33', '#ff5c33', '#fff')
                 self.change_connect_button_text('End')
