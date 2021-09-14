@@ -1,0 +1,3 @@
+-r test.txt
+PyQt5
+qtwidgets

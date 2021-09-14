@@ -1,2 +1,1 @@
-PyQt5
-requests
+-r requirements/prod.txt

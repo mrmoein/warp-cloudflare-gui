@@ -23,4 +23,4 @@ just remove `~/.local/share/applications/warp-gui.desktop` file
 
 ## Screenshot
 
-![warp cloudflare gui](Screenshot.png)
+![warp cloudflare gui](icons/Screenshot.png)
