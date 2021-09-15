@@ -43,10 +43,10 @@ class GUI:
         self.toggle.clicked.connect(self.connect_button_clicked)
 
     def connect_button_clicked(self):
-        if self.connected:
-            self.commend.disconnect()
-        else:
+        if self.toggle.isChecked():
             self.commend.connect()
+        else:
+            self.commend.disconnect()
 
     def show(self):
         self.mainWindow.show()
