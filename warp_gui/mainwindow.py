@@ -1,13 +1,10 @@
 import os
 import time
-
-from PyQt5.QtCore import QCoreApplication
-
 from warp_gui.ui.mainwindow_ui import Ui_MainWindow
 import sys
 from warp_gui.commend import Commend
 import threading
-from qtwidgets import Toggle, AnimatedToggle
+from qtwidgets import AnimatedToggle
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 
@@ -19,6 +16,7 @@ class GUI:
         self.commend = Commend()
         self.ui.setupUi(self.mainWindow)
         self.need_stop = False
+        self.last_status = self.commend.status()
         self.connected = self.commend.is_connected()
         threading.Thread(target=self.status_thread).start()
         self.toggle = self.init_toggle()
@@ -61,22 +59,19 @@ class GUI:
     def status_thread(self):
         while not self.need_stop:
             status = self.commend.status()
-            is_connected = self.commend.is_connected()
             self.ui.label_status_message.setText(status)
 
-            if is_connected != self.connected:
+            if self.last_status != status:
                 if status == 'Connected':
                     self.toggle.setChecked(True)
                     self.set_sub_status_message('private')
                     self.connected = True
-                else:
+                elif status == 'Disconnected' or\
+                        status == 'No network':
                     self.toggle.setChecked(False)
                     self.set_sub_status_message('not private')
                     self.connected = False
-                self.toggle.setDisabled(False)
-
-            if status == 'No network':
-                self.toggle.setDisabled(False)
+                self.last_status = status
             time.sleep(1)
 
     def set_sub_status_message(self, text):
