@@ -59,7 +59,8 @@ class GUI:
     def status_thread(self):
         while not self.need_stop:
             status = self.commend.status()
-            self.ui.label_status_message.setText(status)
+            if status:
+                self.ui.label_status_message.setText(status)
 
             if self.last_status != status:
                 if status == 'Connected':
