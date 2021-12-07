@@ -1,10 +1,10 @@
 # warp cloudflare gui
 
-a GUI app base on [warp-cli](https://developers.cloudflare.com/warp-client/setting-up/linux) for linux
+a GUI app base on [warp-cli](https://developers.cloudflare.com/warp-client/get-started/linux) for linux
 
 ## Installation
 
-read [warp-cli install doc](https://developers.cloudflare.com/warp-client/setting-up/linux). install `warp-cli` and
+read [warp-cli install doc](https://developers.cloudflare.com/warp-client/get-started/linux). install `warp-cli` and
 register with `$ warp-cli register`.
 
 and then:
