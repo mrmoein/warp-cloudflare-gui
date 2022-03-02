@@ -4,7 +4,7 @@ a GUI app base on [warp-cli](https://developers.cloudflare.com/warp-client/get-s
 
 ## Installation
 
-read [warp-cli install doc](https://developers.cloudflare.com/warp-client/get-started/linux). install `warp-cli` and
+Read [warp-cli install doc](https://developers.cloudflare.com/warp-client/get-started/linux). install `warp-cli` and
 register with `$ warp-cli register`.
 
 and then:
@@ -15,11 +15,13 @@ cd warp-cloudflare-gui
 python3 install.py
 ```
 
-now search for `warp cloudflare` app in your desktop menu
+now search for `warp cloudflare` app in your desktop menu.
+
+> ⚠️ IMPORTANT: After the installation please make sure you do not remove the repository. It is required for the desktop shortcut to work.
 
 ## Uninstall
 
-just remove `~/.local/share/applications/warp-gui.desktop` file
+Just remove `~/.local/share/applications/warp-gui.desktop` file.
 
 ## Screenshot
 
