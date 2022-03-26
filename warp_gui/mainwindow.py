@@ -30,11 +30,15 @@ class GUI:
         self.set_icon()
 
     def init_account(self):
-        teams = self.commend.teams()
-        if teams:
+        account_type = self.commend.account_type()
+        if account_type == 'teams':
             self.ui.account_type.setText('TEAMS')
             self.ui.account_type.setStyleSheet(u"color:rgb(70, 111, 221);")
             self.toggle_color = "#466fdd"
+        elif account_type == 'free':
+            pass
+        else:
+            self.ui.account_type.setText('WARP+')
 
     def init_toggle(self, color):
         toggle = AnimatedToggle(
@@ -43,6 +47,7 @@ class GUI:
         )
         if self.connected:
             toggle.setChecked(True)
+            self.ui.label_status_message.setStyleSheet(u"color:rgb(123, 199, 171);")
         toggle.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         toggle.setMinimumSize(140, 120)
         self.ui.pushButton_start_end.close()

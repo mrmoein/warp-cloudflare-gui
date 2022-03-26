@@ -13,6 +13,7 @@ and then:
 git clone https://github.com/mrmoein/warp-cloudflare-gui
 cd warp-cloudflare-gui
 python3 install.py
+sudo chmod +x ~/.local/share/applications/warp-gui.desktop
 ```
 
 now search for `warp cloudflare` app in your desktop menu.

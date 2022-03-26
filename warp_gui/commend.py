@@ -14,16 +14,12 @@ class Commend:
             return True
         return False
 
-    def teams(self):
+    def account_type(self):
         result = self.run('warp-cli account')
-
         try:
             data = result.split('\n')
             result = data[0].split(': ')
-
-            if result[1].lower() == 'team':
-                return True
-            return False
+            return result[1].lower()
         except:
             return False
 
