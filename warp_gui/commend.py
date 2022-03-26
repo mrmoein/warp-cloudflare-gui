@@ -14,6 +14,19 @@ class Commend:
             return True
         return False
 
+    def teams(self):
+        result = self.run('warp-cli account')
+
+        try:
+            data = result.split('\n')
+            result = data[0].split(': ')
+
+            if result[1].lower() == 'team':
+                return True
+            return False
+        except:
+            return False
+
     def connect(self):
         result = self.run('warp-cli connect')
         if result == 'Success':
