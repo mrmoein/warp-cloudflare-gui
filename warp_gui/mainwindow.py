@@ -2,10 +2,10 @@ import os
 import sys
 import threading
 import time
-
 from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtGui import QIcon
+from PyQt5.QtWidgets import QSystemTrayIcon, QMenu
 from qtwidgets import AnimatedToggle
-
 from warp_gui.commend import Commend
 from warp_gui.ui.mainwindow_ui import Ui_MainWindow
 
@@ -21,13 +21,24 @@ class GUI:
         self.last_status = self.commend.status()
         self.connected = self.commend.is_connected()
         threading.Thread(target=self.status_thread).start()
-
+        self.init_tray_icon()
         self.toggle_color = "#f77033"
         self.init_account()
-
         self.toggle = self.init_toggle(self.toggle_color)
         self.init_signals()
         self.set_icon()
+
+    def init_tray_icon(self):
+        self.tray_icon = QSystemTrayIcon(QIcon(os.path.dirname(__file__) + '/../icons/offline.png'), parent=self.app)
+        menu = QMenu(parent=None)
+        self.tray_icon.setContextMenu(menu)
+        self.tray_icon.show()
+
+    def set_tray_icon(self, connected):
+        if connected:
+            self.tray_icon.setIcon(QIcon(os.path.dirname(__file__) + '/../icons/online.png'))
+        else:
+            self.tray_icon.setIcon(QIcon(os.path.dirname(__file__) + '/../icons/offline.png'))
 
     def init_account(self):
         account_type = self.commend.account_type()
@@ -48,6 +59,7 @@ class GUI:
         if self.connected:
             toggle.setChecked(True)
             self.ui.label_status_message.setStyleSheet(u"color:rgb(123, 199, 171);")
+            self.set_tray_icon(True)
         toggle.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         toggle.setMinimumSize(140, 120)
         self.ui.pushButton_start_end.close()
@@ -86,12 +98,14 @@ class GUI:
                     self.ui.label_status_message.setStyleSheet(u"color:rgb(123, 199, 171);")
                     self.set_sub_status_message('private')
                     self.connected = True
+                    self.set_tray_icon(True)
                 elif status == 'Disconnected' or \
                         status == 'No network':
                     self.toggle.setChecked(False)
                     self.set_sub_status_message('not private')
                     self.ui.label_status_message.setStyleSheet(u"color:rgb(255, 80, 57);")
                     self.connected = False
+                    self.set_tray_icon(False)
                 self.last_status = status
             time.sleep(1)
 
