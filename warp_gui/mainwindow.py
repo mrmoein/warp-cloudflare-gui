@@ -4,7 +4,7 @@ import threading
 import time
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtGui import QIcon
-from PyQt5.QtWidgets import QSystemTrayIcon, QMenu
+from PyQt5.QtWidgets import QSystemTrayIcon, QMenu, QAction
 from qtwidgets import AnimatedToggle
 from warp_gui.commend import Commend
 from warp_gui.ui.mainwindow_ui import Ui_MainWindow
@@ -29,9 +29,15 @@ class GUI:
         self.set_icon()
 
     def init_tray_icon(self):
-        self.tray_icon = QSystemTrayIcon(QIcon(os.path.dirname(__file__) + '/../icons/offline.png'), parent=self.app)
-        menu = QMenu(parent=None)
-        self.tray_icon.setContextMenu(menu)
+        self.tray_icon = QSystemTrayIcon(QIcon(os.path.dirname(__file__) + '/../icons/offline.png'), self.mainWindow)
+        self.menu_tray = QMenu()
+        self.__menu_tray_connect = QAction("Connect")
+        self.menu_tray.addAction(self.__menu_tray_connect)
+        self.__menu_tray_disconnect = QAction("Disconnect")
+        self.menu_tray.addAction(self.__menu_tray_disconnect)
+        self.__menu_tray_quit = QAction("Quit")
+        self.menu_tray.addAction(self.__menu_tray_quit)
+        self.tray_icon.setContextMenu(self.menu_tray)
         self.tray_icon.show()
 
     def set_tray_icon(self, connected):
@@ -52,10 +58,7 @@ class GUI:
             self.ui.account_type.setText('WARP+')
 
     def init_toggle(self, color):
-        toggle = AnimatedToggle(
-            checked_color=color,
-            pulse_checked_color="#44FFB000",
-        )
+        toggle = AnimatedToggle(checked_color=color, pulse_checked_color="#44FFB000")
         if self.connected:
             toggle.setChecked(True)
             self.ui.label_status_message.setStyleSheet(u"color:rgb(123, 199, 171);")
@@ -71,6 +74,9 @@ class GUI:
 
     def init_signals(self):
         self.toggle.clicked.connect(self.connect_button_clicked)
+        self.__menu_tray_connect.triggered.connect(self.commend.connect)
+        self.__menu_tray_disconnect.triggered.connect(self.commend.disconnect)
+        self.__menu_tray_quit.triggered.connect(self.app.quit)
 
     def connect_button_clicked(self):
         if self.toggle.isChecked():
