@@ -31,11 +31,11 @@ class Commend:
 
     def status(self):
         output = self.run('warp-cli status')
-        data = output.split('\n')
-        result = data[0]
-        if result == 'Success':
-            status_message = data[1].split(':')[1]
-            return status_message.strip()
+        output = output.split('\n')
+        for row in output:
+            data = row.split(':')
+            if data[0] == 'Status update':
+                return data[1].strip()
         return False
 
     def set_mode(self, mode):
