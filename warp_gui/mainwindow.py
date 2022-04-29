@@ -31,10 +31,10 @@ class GUI:
     def init_tray_icon(self):
         self.tray_icon = QSystemTrayIcon(QIcon(os.path.dirname(__file__) + '/../icons/offline.png'), self.mainWindow)
         self.menu_tray = QMenu()
-        self.__menu_tray_connect = QAction("Connect")
+        self.__menu_tray_connect = QAction("Connect / Disconnect")
         self.menu_tray.addAction(self.__menu_tray_connect)
-        self.__menu_tray_disconnect = QAction("Disconnect")
-        self.menu_tray.addAction(self.__menu_tray_disconnect)
+        self.__menu_tray_hide = QAction("Hide / Show")
+        self.menu_tray.addAction(self.__menu_tray_hide)
         self.__menu_tray_quit = QAction("Quit")
         self.menu_tray.addAction(self.__menu_tray_quit)
         self.tray_icon.setContextMenu(self.menu_tray)
@@ -74,9 +74,21 @@ class GUI:
 
     def init_signals(self):
         self.toggle.clicked.connect(self.connect_button_clicked)
-        self.__menu_tray_connect.triggered.connect(self.commend.connect)
-        self.__menu_tray_disconnect.triggered.connect(self.commend.disconnect)
+        self.__menu_tray_connect.triggered.connect(self.tray_connect_disconnect_clicked)
+        self.__menu_tray_hide.triggered.connect(self.tray_hide_show_clicked)
         self.__menu_tray_quit.triggered.connect(self.app.quit)
+
+    def tray_hide_show_clicked(self):
+        if self.mainWindow.isHidden():
+            self.mainWindow.show()
+        else:
+            self.mainWindow.hide()
+
+    def tray_connect_disconnect_clicked(self):
+        if not self.commend.is_connected():
+            self.commend.connect()
+        else:
+            self.commend.disconnect()
 
     def connect_button_clicked(self):
         if self.toggle.isChecked():
@@ -84,10 +96,13 @@ class GUI:
         else:
             self.commend.disconnect()
 
-    def show(self):
-        self.mainWindow.show()
+    def show(self, hide=False):
+        if not hide:
+            self.mainWindow.show()
+        self.app.setQuitOnLastWindowClosed(False)
+        self.app.lastWindowClosed.connect(self.mainWindow.hide)
         self.app.aboutToQuit.connect(self.end_program)
-        sys.exit(self.app.exec_())
+        self.app.exec_()
 
     def end_program(self):
         self.need_stop = True
