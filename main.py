@@ -2,6 +2,9 @@ from warp_gui.mainwindow import GUI
 import sys
 import warp_gui.errors
 import socket
+import setproctitle
+
+setproctitle.setproctitle('WARP')
 
 try:
     # check program already running or not
