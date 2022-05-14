@@ -99,10 +99,8 @@ class GUI:
     def show(self, hide=False):
         if not hide:
             self.mainWindow.show()
-        self.app.setQuitOnLastWindowClosed(False)
-        self.app.lastWindowClosed.connect(self.mainWindow.hide)
         self.app.aboutToQuit.connect(self.end_program)
-        self.app.exec_()
+        sys.exit(self.app.exec_())
 
     def end_program(self):
         self.need_stop = True

@@ -13,7 +13,7 @@ desktop_file = '{}/.local/share/applications/warp-gui.desktop'.format(Path.home(
 file = open(desktop_file, 'w+')
 file.write('''[Desktop Entry]
 Name=Warp Cloudflare 
-Version=2.0
+Version=1.0
 Comment=A gui app base on warp-cli for linux
 Exec=python3 {}/main.py
 Icon=warp_gui
