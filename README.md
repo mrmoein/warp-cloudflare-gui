@@ -2,6 +2,14 @@
 
 a GUI app base on [warp-cli](https://developers.cloudflare.com/warp-client/get-started/linux) for linux
 
+## Quick Access
+
+- [Installation](#installation)
+- [Hide Mode](#hide-mode)
+- [Uninstall](#uninstall)
+- [Screenshot](#screenshot)
+- [Resolved Issues](#resolved-issues)
+
 ## Installation
 
 Read [warp-cli install doc](https://developers.cloudflare.com/warp-client/get-started/linux). install `warp-cli` and
@@ -30,3 +38,6 @@ Just remove `~/.local/share/applications/warp-gui.desktop` file.
 ## Screenshot
 
 ![warp cloudflare gui](icons/Screenshot.png)
+
+## Resolved Issues
+- [There are 2 tray icons of WARP CLI and this GUI app](https://github.com/mrmoein/warp-cloudflare-gui/issues/11)
