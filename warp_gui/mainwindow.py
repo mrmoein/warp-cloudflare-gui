@@ -48,7 +48,7 @@ class GUI:
 
     def init_account(self):
         account_type = self.commend.account_type()
-        if account_type == 'teams':
+        if account_type == 'team':
             self.ui.account_type.setText('TEAMS')
             self.ui.account_type.setStyleSheet(u"color:rgb(70, 111, 221);")
             self.toggle_color = "#466fdd"
