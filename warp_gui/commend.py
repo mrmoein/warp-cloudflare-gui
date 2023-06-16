@@ -33,7 +33,7 @@ class Commend:
         output = self.run('warp-cli status')
         output = output.split('\n')
         for row in output:
-            data = row.split(':')
+            data = row.split(':', maxsplit=1)
             if data[0] == 'Status update':
                 return data[1].strip()
         return False
