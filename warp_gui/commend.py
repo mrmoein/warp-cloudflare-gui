@@ -36,7 +36,7 @@ class Commend:
             data = row.split(':', maxsplit=1)
             if data[0] == 'Status update':
                 return data[1].strip()
-        return False
+        return ''
 
     def set_mode(self, mode):
         result = self.run('warp-cli set-mode {}'.format(mode))

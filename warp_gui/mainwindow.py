@@ -21,15 +21,15 @@ class GUI:
         self.commend = Commend()
         self.ui.setupUi(self.mainWindow)
         self.need_stop = False
-        self.last_status = self.commend.status()
-        self.connected = self.commend.is_connected()
-        threading.Thread(target=self.status_thread).start()
+        self.last_status = 'First Start'
+        self.connected = False
         self.init_tray_icon()
         self.toggle_color = "#f77033"
         self.init_account()
         self.toggle = self.init_toggle(self.toggle_color)
         self.init_signals()
         self.set_icon()
+        threading.Thread(target=self.status_thread).start()
 
     def init_tray_icon(self):
         self.tray_icon = QSystemTrayIcon(QIcon(os.path.dirname(__file__) + '/../icons/offline.png'), self.mainWindow)
@@ -111,25 +111,28 @@ class GUI:
     def status_thread(self):
         while not self.need_stop:
             status = self.commend.status()
-            if status:
-                self.ui.label_status_message.setText(status)
 
-            if self.last_status != status:
-                if status.startswith('Connected'):
-                    self.toggle.setChecked(True)
-                    self.ui.label_status_message.setStyleSheet(u"color:rgb(123, 199, 171);")
-                    self.set_sub_status_message('private')
-                    self.connected = True
-                    self.set_tray_icon(True)
-                elif status.startswith('Disconnected') or \
-                        status.startswith('Unable to connect'):
-                    self.toggle.setChecked(False)
-                    self.set_sub_status_message('not private')
-                    self.ui.label_status_message.setStyleSheet(u"color:rgb(255, 80, 57);")
-                    self.connected = False
-                    self.set_tray_icon(False)
-                self.last_status = status
-            time.sleep(1)
+            if self.last_status == status:
+                time.sleep(1)
+                continue
+
+            self.ui.label_status_message.setText(status)
+
+            if status.startswith('Connected'):
+                self.toggle.setChecked(True)
+                self.ui.label_status_message.setStyleSheet(u"color:rgb(123, 199, 171);")
+                self.set_sub_status_message('private')
+                self.connected = True
+                self.set_tray_icon(True)
+            elif status.startswith('Disconnected') or \
+                    status.startswith('Unable to connect'):
+                self.toggle.setChecked(False)
+                self.set_sub_status_message('not private')
+                self.ui.label_status_message.setStyleSheet(u"color:rgb(255, 80, 57);")
+                self.connected = False
+                self.set_tray_icon(False)
+
+            self.last_status = status
 
     def set_sub_status_message(self, text):
         self.ui.label_status_sub_message.setText(
