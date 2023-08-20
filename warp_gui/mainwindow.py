@@ -2,10 +2,12 @@ import os
 import sys
 import threading
 import time
+
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtGui import QIcon
-from PyQt5.QtWidgets import QSystemTrayIcon, QMenu, QAction
+from PyQt5.QtWidgets import QAction, QMenu, QSystemTrayIcon
 from qtwidgets import AnimatedToggle
+
 from warp_gui.commend import Commend
 from warp_gui.ui.mainwindow_ui import Ui_MainWindow
 
@@ -112,14 +114,14 @@ class GUI:
                 self.ui.label_status_message.setText(status)
 
             if self.last_status != status:
-                if status == 'Connected':
+                if status.startswith('Connected'):
                     self.toggle.setChecked(True)
                     self.ui.label_status_message.setStyleSheet(u"color:rgb(123, 199, 171);")
                     self.set_sub_status_message('private')
                     self.connected = True
                     self.set_tray_icon(True)
-                elif status == 'Disconnected' or \
-                        status == 'No network':
+                elif status.startswith('Disconnected') or \
+                        status.startswith('Unable to connect'):
                     self.toggle.setChecked(False)
                     self.set_sub_status_message('not private')
                     self.ui.label_status_message.setStyleSheet(u"color:rgb(255, 80, 57);")
