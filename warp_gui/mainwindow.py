@@ -17,6 +17,7 @@ class GUI:
         self.app = QtWidgets.QApplication(sys.argv)
         self.app.setApplicationName('Cloudflare Warp')
         self.mainWindow = QtWidgets.QMainWindow()
+        self.mainWindow.closeEvent = self.handleCloseEvent
         self.ui = Ui_MainWindow()
         self.commend = Commend()
         self.ui.setupUi(self.mainWindow)
@@ -139,3 +140,7 @@ class GUI:
             "<html><head/><body><p><span style=\" font-size:11pt; color:#ffffff;\">Your internet is </span><span "
             "style=\" font-size:11pt; font-weight:600; color:#ffffff;\">{text}</span></p></body></html>".format(
                 text=text))
+
+    def handleCloseEvent(self, a0):
+        self.mainWindow.hide()
+        a0.ignore()
