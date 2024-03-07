@@ -6,6 +6,7 @@ cur_path = sys.path[0]
 
 os.system("pip3 install -U pip wheel setuptools")
 os.system("pip3 install -r requirements.txt")
+os.system("mkdir -p ~/.local/share/icons")
 os.system("cp {}/icons/logo.png ~/.local/share/icons/warp_gui.png".format(cur_path))
 
 desktop_file = '{}/.local/share/applications/warp-gui.desktop'.format(Path.home())
