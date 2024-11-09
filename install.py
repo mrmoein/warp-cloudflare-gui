@@ -16,11 +16,12 @@ file.write('''[Desktop Entry]
 Name=Warp Cloudflare 
 Version=1.0
 Comment=A gui app base on warp-cli for linux
-Exec=python3 {}/main.py
+Exec=bash {}/main.sh
 Icon=warp_gui
 Terminal=false
+Path={}
 Type=Application
-'''.format(cur_path))
+'''.format(cur_path, cur_path))
 print('Desktop file created at "{}"'.format(desktop_file))
 
 
