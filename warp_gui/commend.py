@@ -15,7 +15,7 @@ class Commend:
         return False
 
     def account_type(self):
-        result = self.run('warp-cli account')
+        result = self.run('warp-cli registration show')
         try:
             data = result.split('\n')
             result = data[0].split(': ')
@@ -39,7 +39,7 @@ class Commend:
         return ''
 
     def set_mode(self, mode):
-        result = self.run('warp-cli set-mode {}'.format(mode))
+        result = self.run('warp-cli mode {}'.format(mode))
         if result == 'Success':
             return True
         return False
