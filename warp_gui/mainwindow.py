@@ -42,7 +42,16 @@ class GUI:
         self.__menu_tray_quit = QAction("Quit")
         self.menu_tray.addAction(self.__menu_tray_quit)
         self.tray_icon.setContextMenu(self.menu_tray)
+
+        # Connect left click to toggle connect/disconnect
+        self.tray_icon.activated.connect(self.on_tray_icon_activated)
+
         self.tray_icon.show()
+
+
+    def on_tray_icon_activated(self, reason):
+        if reason == QSystemTrayIcon.Trigger:  # left click
+            self.tray_connect_disconnect_clicked()
 
     def set_tray_icon(self, connected):
         if connected:
