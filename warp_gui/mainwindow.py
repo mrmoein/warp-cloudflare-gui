@@ -14,6 +14,10 @@ from warp_gui.ui.mainwindow_ui import Ui_MainWindow
 
 class GUI:
     def __init__(self):
+        if hasattr(QtCore.Qt, 'AA_EnableHighDpiScaling'):
+            QtWidgets.QApplication.setAttribute(QtCore.Qt.AA_EnableHighDpiScaling, True)
+        if hasattr(QtCore.Qt, 'AA_UseHighDpiPixmaps'):
+            QtWidgets.QApplication.setAttribute(QtCore.Qt.AA_UseHighDpiPixmaps, True)
         self.app = QtWidgets.QApplication(sys.argv)
         self.app.setApplicationName('Cloudflare Warp')
         self.mainWindow = QtWidgets.QMainWindow()
