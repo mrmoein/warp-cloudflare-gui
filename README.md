@@ -16,9 +16,9 @@ Read the [warp-cli install](https://developers.cloudflare.com/warp-client/get-st
 
 Then execute the following commands:
 
+    $ sudo apt install git python3 python3-venv python3-pip
     $ git clone https://github.com/mrmoein/warp-cloudflare-gui
     $ cd warp-cloudflare-gui
-    $ sudo apt install python3 python3-venv python3-pip
     $ bash install.sh
     $ sudo chmod +x ~/.local/share/applications/warp-gui.desktop
 
