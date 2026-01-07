@@ -18,6 +18,7 @@ Then execute the following commands:
 
     $ git clone https://github.com/mrmoein/warp-cloudflare-gui
     $ cd warp-cloudflare-gui
+    $ sudo apt install python3 python3-venv python3-pip
     $ bash install.sh
     $ sudo chmod +x ~/.local/share/applications/warp-gui.desktop
 
