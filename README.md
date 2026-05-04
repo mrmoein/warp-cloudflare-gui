@@ -33,7 +33,7 @@ If you only want to use the tray icon, you can run the program in hidden mode.
 
 ## Uninstall
 
-Just remove the `~/.local/share/applications/warp-gui.desktop` file.
+Remove the `~/.local/share/applications/warp-gui.desktop` file and cloned repository.
 
 ## Screenshot
 
